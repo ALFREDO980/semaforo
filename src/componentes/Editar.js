@@ -60,7 +60,7 @@ class Lista extends React.Component {
                     )
                 )}
                 
-            </tbody>
+            </tbody> 
         </table> );
         }
     }

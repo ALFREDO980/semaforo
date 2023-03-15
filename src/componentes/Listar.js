@@ -1,16 +1,28 @@
 import React from 'react';
-import styled from 'styled-components';
-import CrearUsuario from './CrearUsuario';
 
 
-class Lista extends React.Component {
-    constructor(props) {
-        super(props);
-    }
+
+class Listar extends React.Component {
+    
+    
     state = { 
         datosCargados:false,
         empleados:[]
     }
+    borrarRegistros= (id) =>{
+        console.log(id);
+
+        fetch("http://localhost/empleados/?borrar="+id)
+        .then(respuesta=>respuesta.json())
+        .then((datosRespuesta)=>{
+                
+                console.log(datosRespuesta);
+                this.cargarDatos();
+                        
+            })
+        .catch(console.log)
+    }
+
     cargarDatos(){
 
         fetch("http://localhost/empleados/")
@@ -61,8 +73,12 @@ class Lista extends React.Component {
                             <td>{empleado.correo}</td>
                             <td>
                         <div className="btn-group" role="group" aria-label="">
-                            <button type="button" className="btn btn-warning" href="/editar">Editar</button>
-                            <button type="button" className="btn btn-danger">Borrar</button>
+                            <a type="button" className="btn btn-warning" href={'/editarUsuario/'+empleado.id}
+
+                            >Editar</a>
+                            <button type="button" className="btn btn-danger"
+                                onClick={()=>this.borrarRegistros(empleado.id)}
+                            >Borrar</button>
                         </div>
                     </td>
                 </tr>
@@ -81,9 +97,7 @@ class Lista extends React.Component {
         }
     }
 }
-const Boton= styled.button`
-display:block;
-`;
 
 
-export default Lista;
+
+export default Listar;

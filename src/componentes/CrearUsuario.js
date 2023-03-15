@@ -2,11 +2,12 @@ import React from 'react';
 
 
 
+
 class CrearUsuario extends React.Component {
     constructor(props) {
         super(props);
     }
-    state = {  
+    state = { 
         nombre:"",
         correo:""
     }
@@ -20,21 +21,23 @@ class CrearUsuario extends React.Component {
         console.log("Formulario enviado...");
         
         const{nombre,correo}=this.state;
+        
         console.log(nombre);
         console.log(correo);
 
-        var datosEnviar={nombre:nombre, correo:correo}
-        fetch("http://localhost/empleados/?insertar=1",{
+        var datosEnviar={ nombre:nombre, correo:correo}
+        fetch("http://localhost/empleados/?actualizar=1",{
             method:"POST",
             body:JSON.stringify(datosEnviar)
         })
         .then(respuesta=>respuesta.json())
         .then((datosRespuesta)=>{
                 
-                console.log(datosRespuesta);
-                this.props.history.push("/");
+        console.log(datosRespuesta);
+        this.props.history.push("/");
             
         })
+        
         .catch(console.log)
         
     }

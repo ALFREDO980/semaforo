@@ -1,9 +1,11 @@
-import logo from './logo.svg';
+
 import './App.css';
-import Lista from "./componentes/Listar.js";
+import Listar from "./componentes/Listar.js";
 import Crear from "./componentes/Crear.js";
 import Editar from "./componentes/Editar.js";
 import CrearUsuario from './componentes/CrearUsuario';
+import editarUsuario  from './componentes/EditarUsuario';
+
 
 
 import { Route, BrowserRouter as Router} from "react-router-dom";
@@ -27,10 +29,11 @@ function App() {
       
       <div className="container">
         <br></br>
-        <Route exact path='/' component={Lista} ></Route>
+        <Route exact path='/' component={Listar} ></Route>
         <Route path='/crear' component={Crear} ></Route>
         <Route path='/editar' component={Editar} ></Route>
         <Route path='/crearUsuario' component={CrearUsuario} ></Route>
+        <Route path='/editarUsuario/:id' component={editarUsuario} ></Route>
         
         
       </div>
