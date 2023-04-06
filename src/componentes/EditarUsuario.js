@@ -1,114 +1,118 @@
-import React from "react";
+import React from 'react';
+import api from '../servicios/api';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
-class editarUsuario extends React.Component {
-    constructor(props){
+class Editar extends React.Component {
+    constructor(props) {
         super(props);
-        this.state={
-            datosCargados:false, 
-            empleado:[]
+        this.state = {
+            videojuego: {
+                id: "",
+                "name": "",
+                "firstname": "",
+                "rol": "",
+                "user": "",
+                "password": "",
+
+            },
+        };
+        // Indicarle a las funciones a quién nos referimos con "this"
+        this.manejarCambio = this.manejarCambio.bind(this);
+        this.manejarEnvioDeFormulario = this.manejarEnvioDeFormulario.bind(this);
+    }
+    async componentDidMount() {
+        // Obtener ID de URL
+        const idVideojuego = 26;
+        console.log(idVideojuego)
+        // Llamar a la API para obtener los detalles
+        const respuesta = await fetch(`${api.RUTA_API}/obtener_videojuego.php?id=${idVideojuego}`);
+        const videojuego = await respuesta.json();
+        // "refrescar" el formulario
+        this.setState({
+            videojuego: videojuego,
+        });
+    }
+    render() {
+        return (
+            <div className="column is-one-third">
+                <h1 className="is-size-3">Editando usuario</h1>
+                <ToastContainer></ToastContainer>
+                <form className="field" onSubmit={this.manejarEnvioDeFormulario}>
+                    <div className="form-group">
+                        <label className="label" htmlFor="name">Nombre:</label>
+                        <input autoFocus required placeholder="Nombre" type="text" id="name" onChange={this.manejarCambio} value={this.state.videojuego.name} className="input" />
+                    </div>
+                    <div className="form-group">
+                        <label className="label" htmlFor="firstname">Apellido:</label>
+                        <input required placeholder="Apellido" type="text" id="firstname" onChange={this.manejarCambio} value={this.state.videojuego.firstname} className="input" />
+                    </div>
+                    <div className="form-group">
+                        <label className="label" htmlFor="rol">Rol:</label>
+                        <input required placeholder="rol" type="number" id="rol" onChange={this.manejarCambio} value={this.state.videojuego.rol} className="input" />
+                    </div>
+                    <div className="form-group">
+                        <label className="label" htmlFor="user">Usuario:</label>
+                        <input required placeholder="user" type="text" id="user" onChange={this.manejarCambio} value={this.state.videojuego.user} className="input" />
+                    </div>
+                    <div className="form-group">
+                        <label className="label" htmlFor="password">Password:</label>
+                        <input required placeholder="rol" type="text" id="password" onChange={this.manejarCambio} value={this.state.videojuego.password} className="input" />
+                    </div>
+                    <div className="form-group">
+                        <button className="button is-success mt-2">Guardar</button>
+                        &nbsp;
+                        <a href="/usuarios" className="button is-primary mt-2">Volver</a>
+                    </div>
+                </form>
+            </div>
+        );
+    }
+    async manejarEnvioDeFormulario(evento) {
+
+        evento.preventDefault();
+        // Codificar nuestro videojuego como JSON
+
+        const cargaUtil = JSON.stringify(this.state.videojuego);
+        // ¡Y enviarlo!
+        const respuesta = await fetch(`${api.RUTA_API}/actualizar_videojuego.php`, {
+            method: "PUT",
+            body: cargaUtil,
+        });
+        const exitoso = await respuesta.json();
+        if (exitoso) {
+            toast('Usuario Guardado 🎮', {
+                position: "top-left",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+            
+        } else {
+            toast.error("Error guardando. Intenta de nuevo");
         }
-
     }
-    cambioValor=(e)=>{
-        const state=this.state.empleado;
-        state[e.target.name]=e.target.value;
-        this.setState({empleado:state});     
-    }
-    enviarDatos = (e) =>{
-        e.preventDefault();
-        console.log("Fromulario enviado..."); 
-        
-        const{id,nombre,correo}= this.state.empleado;
-        console.log(id);
-        console.log(nombre);
-        console.log(correo);
-
-        var datosEnviar={id:id,nombre:nombre, correo:correo}
-        fetch("http://localhost/empleados/?actualizar=1",{
-            method:"POST",
-            body:JSON.stringify(datosEnviar)
-        })
-        .then(respuesta=>respuesta.json())
-        .then((datosRespuesta)=>{
-                
-        console.log(datosRespuesta);
-        this.props.history.push("/");
-            
-        })
-        
-        .catch(console.log)
-        
-    }
-
-    componentDidMount(){
-        console.log(this.props.match.params.id);
-
-        fetch("http://localhost/empleados/?consultar="+this.props.match.params.id)
-        .then(respuesta=>respuesta.json())
-        .then((datosRespuesta)=>{
-                
-                console.log("=>"+datosRespuesta);
-                this.setState({
-                    datosCargados:true, 
-                    empleado:datosRespuesta[0]
-                })
-            
-            })
-        .catch(console.log)
-    }
-    
-    render() { 
-
-        const{datosCargados, empleado} = this.state
-
-        if(!datosCargados){return(<div>Cargando...</div>);}
-
-        else{
-            return ( 
-                
-                <div className="card">
-                    
-                    <div className="card-header">
-                        EDITAR EMPLEADO
-                    </div>
-                
-                    <div className="card-body">
-
-                        
-
-                        <form onSubmit={this.enviarDatos}>
-                            
-
-
-                            <div className="form-group">
-                                <label htmlFor="">Clave:</label>
-                                <input type="text" readOnly className="form-control" value={empleado.id} onChange={this.cambiarValor} name="id" id="id" aria-describedby="helpId" placeholder=""/>
-                                <small id="helpId" className="form-text text-muted">Clave</small>
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="">Nombre:</label>
-                                <input type="text" name="nombre" onChange={this.cambioValor} value={empleado.nombre} id="nombre" className="form-control" placeholder="" aria-describedby="helpId"/>
-                                <small id="helpId" className="text-muted">Escriba nombre del empleado:</small>
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="">Correo:</label>
-                                <input type="text" name="correo" onChange={this.cambioValor} value={empleado.correo} id="correo" className="form-control" placeholder="" aria-describedby="helpId"/>
-                                <small id="helpId" className="text-muted">Escribir correo:</small>
-                            </div>
-                            <div className="btn-group" role="group" aria-label="">
-                                    <button type="submit" className="btn btn-primary">Actualizar</button>
-                                    <a className="btn btn-danger" href='/'>Cancelar</a>
-                            </div>
-                        </form>
-                    </div>
-                    <div className="card-footer text-muted">
-                        
-                    </div>
-                </div>
-            
-            );
-        }
+    manejarCambio(evento) {
+        // Extraer la clave del estado que se va a actualizar, así como el valor
+        const clave = evento.target.id;
+        let valor = evento.target.value;
+        this.setState(state => {
+            const usuarioActualizado = state.videojuego;
+            // Si es la calificación o el nombre, necesitamos castearlo a entero
+            if (clave !== "nombre") {
+                valor = parseFloat(valor);
+            }
+            // Actualizamos el valor del videojuego, solo en el campo que se haya cambiado
+            usuarioActualizado[clave] = valor;
+            return {
+                videojuego: usuarioActualizado,
+            }
+        });
     }
 }
-export default editarUsuario;
+
+export default Editar;

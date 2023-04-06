@@ -1,29 +1,28 @@
 import React from 'react';
 import api from '../servicios/api';
-import FilaDeTablaDeEmpleados from './FilaDeTablaDeEmpleados';
+import FilaDeTablaDeVideojuego from './FilaDeTablaDeUsuarios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUsers} from '@fortawesome/free-solid-svg-icons'
+import { faUsers } from '@fortawesome/free-solid-svg-icons'
 
-
-class Listar extends React.Component {
+class UsuariosFuncion extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            empleados: [],
+            usuarios: [],
         };
     }
     async componentDidMount() {
-        const respuesta = await fetch(`${api.RUTA_API}/obtener_empleados.php`);
-        const empleados = await respuesta.json();
+        const respuesta = await fetch(`${api.RUTA_API}/obtener_videojuegos.php`);
+        const usuarios = await respuesta.json();
         this.setState({
-            empleados: empleados,
+            usuarios: usuarios,
         });
     }
     render() {
         return (
             <div>
                 <div className="column">
-                    <h1 className="is-size-3"> <FontAwesomeIcon icon={faUsers} /> EMPLEADOS</h1>
+                    <h1 className="is-size-3"> <FontAwesomeIcon icon={faUsers} /> USUARIOS</h1>
                     
                 </div>
                 <div className="table-container">
@@ -32,14 +31,17 @@ class Listar extends React.Component {
                             <tr>
                                 <th>ID</th>
                                 <th>Nombre</th>
-                                <th>Correo</th>
+                                <th>Usuario</th>
+                                <th>Rol</th>
+                                <th>Password</th>
+                                <th>Rol</th>
                                 <th>Editar</th>
                                 <th>Eliminar</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {this.state.empleados.map(videojuego => {
-                                return <FilaDeTablaDeEmpleados key={videojuego.id} videojuego={videojuego}></FilaDeTablaDeEmpleados>;
+                            {this.state.usuarios.map(videojuego => {
+                                return <FilaDeTablaDeVideojuego key={videojuego.id} videojuego={videojuego}></FilaDeTablaDeVideojuego>;
                             })}
                         </tbody>
                     </table>
@@ -50,4 +52,4 @@ class Listar extends React.Component {
 }
 
 
-export default Listar;
+export default UsuariosFuncion;

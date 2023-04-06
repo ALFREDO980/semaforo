@@ -1,14 +1,15 @@
 
 import './App.css';
 import Listar from "./componentes/Listar.js";
-import Crear from "./componentes/Crear.js";
-import Editar from "./componentes/Editar.js";
-import CrearUsuario from './componentes/CrearUsuario';
-import editarUsuario  from './componentes/EditarUsuario';
-
-
+import UsuariosFuncion from './componentes/Usuarios.js';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Editar from './componentes/EditarUsuario';
+import { faHome, faMapLocation, faClipboard } from '@fortawesome/free-solid-svg-icons'
 
 import { Route, BrowserRouter as Router} from "react-router-dom";
+
+
+
 
 
 
@@ -18,27 +19,25 @@ function App() {
     
     <Router>
     
-      <nav className="navbar navbar-expand-lg bg-dark">
+      <nav className="navbar navbar-expand-lg bg-light">
           <div className="nav navbar-nav">
-              <a className="nav-item nav-link active" href="/">INICIO <span className="sr-only">(current)</span></a>
-              <a className="nav-item nav-link" href="/crear">MAPA DELEGACION</a>
-              <a className="nav-item nav-link" href="/editar">REGISTROS</a>
+              <a className="nav-item nav-link active" href="/"><FontAwesomeIcon icon={faHome} /> INICIO <span className="sr-only">(current)</span></a>
+              <a className="nav-item nav-link" href="/crear"><FontAwesomeIcon icon={faMapLocation} /> MAPA DELEGACION</a>
+              <a className="nav-item nav-link" href="/usuarios"><FontAwesomeIcon icon={faClipboard} /> USUARIOS</a>
               
           </div>
       </nav>
       
-      <div className="container">
+      
         <br></br>
         <Route exact path='/' component={Listar} ></Route>
-        <Route path='/crear' component={Crear} ></Route>
-        <Route path='/editar' component={Editar} ></Route>
-        <Route path='/crearUsuario' component={CrearUsuario} ></Route>
-        <Route path='/editarUsuario/:id' component={editarUsuario} ></Route>
+        <Route path='/usuarios' component={UsuariosFuncion} ></Route>
+        <Route path='/editarUsuario' component={Editar}></Route> 
+    
         
-        
-      </div>
-      
     </Router>
+
+    
     
   );
 }
