@@ -1,23 +1,23 @@
 <?php
 
-function eliminarVideojuego($id)
+function eliminarusuario($id)
 {
     $bd = obtenerConexion();
     $sentencia = $bd->prepare("DELETE FROM usuarios WHERE id = ?");
     return $sentencia->execute([$id]);
 }
 
-function actualizarVideojuego($videojuego)
+function actualizarusuario($usuario)
 {
     $bd = obtenerConexion();
-    $sentencia = $bd->prepare("UPDATE usuarios   SET name = ?, firstname = ?, rol = ? WHERE id = ?");
-    return $sentencia->execute([$videojuego->name, $videojuego->firstname, $videojuego->rol, $videojuego->id]);
+    $sentencia = $bd->prepare("UPDATE usuarios   SET name = ?, firstname = ?, user = ?, password = ?, rol = ? WHERE id = ?");
+    return $sentencia->execute([$usuario->name, $usuario->firstname, $usuario->rol, $usuario->id]);
 }
 
-function obtenerVideojuegoPorId($id)
+function obtenerusuarioPorId($id)
 {
     $bd = obtenerConexion();
-    $sentencia = $bd->prepare("SELECT id, name, firstname, user, rol FROM usuarios WHERE id = 26");
+    $sentencia = $bd->prepare("SELECT id, name, firstname, user, password, rol FROM usuarios WHERE id = 26");
     $sentencia->execute([$id]);
     return $sentencia->fetchObject();
 }
@@ -36,11 +36,11 @@ function obtenerEmpleados()
     return $sentencia->fetchAll();
 }
 
-function guardarVideojuego($videojuego)
+function guardarVideojuego($usuario)
 {
     $bd = obtenerConexion();
-    $sentencia = $bd->prepare("INSERT INTO videojuegos(nombre, precio, calificacion) VALUES (?, ?, ?)");
-    return $sentencia->execute([$videojuego->nombre, $videojuego->precio, $videojuego->calificacion]);
+    $sentencia = $bd->prepare("INSERT INTO usuarios(name, firstname, user, password, rol) VALUES (?, ?, ?, ?, ?)");
+    return $sentencia->execute([$usuario->name, $usuario->firstname, $usuario->user, $usuario->password, $usuario->rol]);
 }
 
 function obtenerVariableDelEntorno($key)

@@ -28,7 +28,8 @@ También tengo canal de YouTube: https://www.youtube.com/channel/UCroP4BTWjfM0Ck
 */ ?>
 <?php
 include_once "cors.php";
-$videojuego = json_decode(file_get_contents("php://input"));
+$usuario = json_decode(file_get_contents("php://input"));
 include_once "funciones.php";
-$resultado = guardarVideojuego($videojuego);
-echo json_encode($resultado);
+
+$resultado = guardarVideojuego($usuario);
+echo json_encode('no se recibio');

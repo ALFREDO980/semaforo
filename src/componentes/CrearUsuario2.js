@@ -111,7 +111,7 @@ class CrearUsuario2 extends React.Component {
                         </div>
                         <div className="btn-group" role="group" aria-label="">
                                 <button type="submit" className="btn btn-success">Agregar empleado</button>
-                                <a className="btn btn-danger" href='/editar'>Cancelar</a>
+                                <a className="btn btn-danger" href='/usuarios'>Cancelar</a>
                         </div>
                     </form>
                 </div>

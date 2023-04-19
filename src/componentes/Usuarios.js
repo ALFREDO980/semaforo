@@ -2,7 +2,7 @@ import React from 'react';
 import api from '../servicios/api';
 import FilaDeTablaDeVideojuego from './FilaDeTablaDeUsuarios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUsers } from '@fortawesome/free-solid-svg-icons'
+import { faUsers , faUserPlus } from '@fortawesome/free-solid-svg-icons'
 
 class UsuariosFuncion extends React.Component {
     constructor(props) {
@@ -22,8 +22,7 @@ class UsuariosFuncion extends React.Component {
         return (
             <div>
                 <div className="column">
-                    <h1 className="is-size-3"> <FontAwesomeIcon icon={faUsers} /> USUARIOS</h1>
-                    
+                    <h3 className="is-size-4"> <FontAwesomeIcon icon={faUsers} /> USUARIOS   <a href='/agregarUsuario' className="btn btn-primary"> <FontAwesomeIcon icon={faUserPlus}/> AGREGAR</a></h3>
                 </div>
                 <div className="table-container">
                     <table className="table table-striped table-dark">
@@ -31,8 +30,8 @@ class UsuariosFuncion extends React.Component {
                             <tr>
                                 <th>ID</th>
                                 <th>Nombre</th>
+                                <th>Apellido</th>
                                 <th>Usuario</th>
-                                <th>Rol</th>
                                 <th>Password</th>
                                 <th>Rol</th>
                                 <th>Editar</th>
