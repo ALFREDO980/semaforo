@@ -1,23 +1,23 @@
 <?php
 
-function eliminarusuario($id)
+function eliminarVideojuego($id)
 {
     $bd = obtenerConexion();
     $sentencia = $bd->prepare("DELETE FROM usuarios WHERE id = ?");
     return $sentencia->execute([$id]);
 }
 
-function actualizarusuario($usuario)
+function actualizarVideojuego($videojuego)
 {
     $bd = obtenerConexion();
-    $sentencia = $bd->prepare("UPDATE usuarios   SET name = ?, firstname = ?, user = ?, password = ?, rol = ? WHERE id = ?");
-    return $sentencia->execute([$usuario->name, $usuario->firstname, $usuario->rol, $usuario->id]);
+    $sentencia = $bd->prepare("UPDATE usuarios   SET name = ?, firstname = ?,  user = ?, password = ?, rol = ? WHERE id = ?");
+    return $sentencia->execute([$videojuego->name, $videojuego->firstname, $videojuego->user, $videojuego->password, $videojuego->rol, $videojuego->id]);
 }
 
-function obtenerusuarioPorId($id)
+function obtenerVideojuegoPorId($id)
 {
     $bd = obtenerConexion();
-    $sentencia = $bd->prepare("SELECT id, name, firstname, user, password, rol FROM usuarios WHERE id = 26");
+    $sentencia = $bd->prepare("SELECT id, name, firstname, user, password, rol FROM usuarios WHERE id = ?");
     $sentencia->execute([$id]);
     return $sentencia->fetchObject();
 }

@@ -30,6 +30,5 @@ También tengo canal de YouTube: https://www.youtube.com/channel/UCroP4BTWjfM0Ck
 include_once "cors.php";
 $usuario = json_decode(file_get_contents("php://input"));
 include_once "funciones.php";
-
 $resultado = guardarVideojuego($usuario);
-echo json_encode('no se recibio');
+echo json_encode($resultado);

@@ -27,7 +27,7 @@ class Editar extends React.Component {
     }
     async componentDidMount() {
         // Obtener ID de URL
-        const idVideojuego = this.props.match.params.id;
+        const idVideojuego = this.state.match.id;
         console.log(idVideojuego)
         // Llamar a la API para obtener los detalles
         const respuesta = await fetch(`${api.RUTA_API}/obtener_videojuego.php?id=${idVideojuego}`);
